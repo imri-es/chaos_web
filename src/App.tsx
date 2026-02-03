@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 import type { RootState } from './store/store';
 import './App.css';
 
-// Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
@@ -23,8 +22,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
   return children;
 };
 
-// Route for users who haven't confirmed email, if you strictly enforce it on route level
-// For this task, we assume user is redirected there after registration
+// public route for users who haven't confirmed email
 const PublicRoute = ({ children }: { children: React.ReactElement }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
@@ -40,7 +38,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Auth Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
@@ -49,13 +46,11 @@ function App() {
           <Route path="/reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
         </Route>
 
-        {/* Protected App Routes */}
         <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
           <Route index element={<Navigate to="/panel" replace />} />
           <Route path="panel" element={<Panel />} />
         </Route>
 
-        {/* Fallback */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

@@ -16,7 +16,6 @@ const Register: React.FC = () => {
     const [form] = Form.useForm();
     const [submittable, setSubmittable] = React.useState(false);
 
-    // Watch all values
     const values = Form.useWatch([], form);
 
     React.useEffect(() => {
@@ -37,7 +36,7 @@ const Register: React.FC = () => {
     }, [error, dispatch]);
 
     const onFinish = async (values: any) => {
-        const { remember, confirm, ...userData } = values; // Exclude confirm password and remember from userdata sent to API
+        const { remember, confirm, ...userData } = values;
         const resultAction = await dispatch(register({ userData, remember }));
 
         if (register.fulfilled.match(resultAction)) {

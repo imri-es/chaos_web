@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/axios';
 
-// Define types for state
 interface User {
     id: string;
     email: string;
     fullName: string;
     role: string;
-    // Add other user properties as needed
 }
 
 export interface AuthState {
@@ -19,7 +17,6 @@ export interface AuthState {
     isEmailConfirmed: boolean;
 }
 
-// Initial state
 const initialState: AuthState = {
     user: null,
     token: localStorage.getItem('token') || sessionStorage.getItem('token'),
@@ -29,7 +26,6 @@ const initialState: AuthState = {
     isEmailConfirmed: false,
 };
 
-// Async Thunks
 export const login = createAsyncThunk(
     '/login',
     async ({ credentials }: { credentials: any; remember: boolean }, { rejectWithValue }) => {
@@ -122,7 +118,7 @@ const authSlice = createSlice({
             })
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isAuthenticated = true; // Auto-login after register
+                state.isAuthenticated = true; // keep the token and no need to login
                 state.user = action.payload.user;
                 state.token = action.payload.token;
 

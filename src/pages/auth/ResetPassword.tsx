@@ -13,7 +13,7 @@ const ResetPassword: React.FC = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');
-    const email = searchParams.get('email'); // Depending on backend implementation
+    const email = searchParams.get('email');
     const [form] = Form.useForm();
     const [submittable, setSubmittable] = React.useState(false);
 

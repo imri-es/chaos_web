@@ -108,7 +108,7 @@ const Panel: React.FC = () => {
 
     useEffect(() => {
         fetchData();
-    }, [JSON.stringify(tableParams)]); // Simple dependency check for object
+    }, [JSON.stringify(tableParams)]); 
 
     const handleTableChange = (
         pagination: TablePaginationConfig,
@@ -125,7 +125,6 @@ const Panel: React.FC = () => {
             sortOrder: sortOrder as string,
         });
 
-        // If sorting changed, reset to first page
         if (pagination.pageSize !== tableParams.pagination?.pageSize) {
             setData([]);
         }
@@ -211,7 +210,6 @@ const Panel: React.FC = () => {
             title: 'Verification',
             dataIndex: 'isEmailConfirmed',
             sorter: true,
-            // Requirement said "get it from db". We have isEmailConfirmed.
             render: (verified: boolean) => (
                 <Tag color={verified ? 'success' : 'default'}>
                     {verified ? 'Verified' : 'Not Verified'}

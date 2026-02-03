@@ -23,7 +23,7 @@ const ActionHistoryModal: React.FC<ActionHistoryModalProps> = ({ visible, onClos
         if (visible && userId) {
             fetchHistory();
         } else {
-            setData([]); // Clear data when closed
+            setData([]);
         }
     }, [visible, userId]);
 
@@ -86,7 +86,7 @@ const ActionHistoryModal: React.FC<ActionHistoryModalProps> = ({ visible, onClos
             <Table
                 columns={columns}
                 dataSource={data}
-                rowKey={(record) => record.timestamp + record.action} // Composite key or just index if unique enough
+                rowKey={(record) => record.timestamp + record.action} 
                 loading={loading}
                 pagination={{ pageSize: 5 }}
             />

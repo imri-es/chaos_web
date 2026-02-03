@@ -16,7 +16,6 @@ const ForgotPassword: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    // Watch all values
     const values = Form.useWatch([], form);
 
     React.useEffect(() => {
