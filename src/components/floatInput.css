@@ -1,0 +1,25 @@
+.float-label {
+    position: relative;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 32px;
+    top: 8px;
+    transition: 0.2s ease all;
+    color: #999;
+    z-index: 1;
+}
+
+.label-float {
+    top: -10px;
+    left: 12px;
+    font-size: 12px;
+    background-color: white;
+    padding: 0 4px;
+    color: #1890ff;
+    /* Ant Design primary color usually */
+}
