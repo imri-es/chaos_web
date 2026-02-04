@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react';
 
 const useMobile = () => {
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(max-width: 768px)');
-
-        setIsMobile(mediaQuery.matches);
-
-        const handleResize = (e: MediaQueryListEvent) => {
-            setIsMobile(e.matches);
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
         };
 
-        mediaQuery.addEventListener('change', handleResize);
+        window.addEventListener('resize', handleResize);
 
         return () => {
-            mediaQuery.removeEventListener('change', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 

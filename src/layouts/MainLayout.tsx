@@ -2,10 +2,12 @@ import React from 'react';
 import { Layout, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import useMobile from '../hooks/useMobile';
 
 const { Header, Content } = Layout;
 
 const MainLayout: React.FC = () => {
+    const isMobile = useMobile();
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -22,8 +24,8 @@ const MainLayout: React.FC = () => {
             </Header>
             <Content
                 style={{
-                    margin: '24px 16px',
-                    padding: 24,
+                    margin: isMobile ? '0' : '24px 16px',
+                    padding: isMobile ? 12 : 24,
                     background: colorBgContainer,
                     borderRadius: borderRadiusLG,
                     height: "calc(100vh - 120px)"

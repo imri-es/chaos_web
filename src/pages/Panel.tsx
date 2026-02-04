@@ -9,6 +9,7 @@ import api from '../utils/axios';
 import type { TablePaginationConfig } from 'antd/es/table';
 import type { FilterValue, SorterResult } from 'antd/es/table/interface';
 import ActionHistoryModal from '../components/ActionHistoryModal';
+import useMobile from '../hooks/useMobile';
 
 const { Header, Content } = Layout;
 
@@ -31,9 +32,12 @@ interface TableParams {
     filters?: Record<string, FilterValue | null>;
 }
 
+
+
 const Panel: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const isMobile = useMobile();
     useSelector((state: RootState) => state.auth);
     const {
         token: { colorBgContainer },
@@ -108,7 +112,7 @@ const Panel: React.FC = () => {
 
     useEffect(() => {
         fetchData();
-    }, [JSON.stringify(tableParams)]); 
+    }, [JSON.stringify(tableParams)]);
 
     const handleTableChange = (
         pagination: TablePaginationConfig,
@@ -205,6 +209,7 @@ const Panel: React.FC = () => {
             title: 'Email',
             dataIndex: 'email',
             sorter: true,
+            render: (text: string) => <div style={{ wordBreak: 'break-all' }}>{text}</div>,
         },
         {
             title: 'Verification',
@@ -260,9 +265,9 @@ const Panel: React.FC = () => {
                     </Button>
                 </Space>
             </Header>
-            <Content style={{ padding: 24, background: colorBgContainer }}>
-                <Space style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                    <div style={{ marginBottom: 16 }}>
+            <Content style={{ padding: isMobile ? 0 : 24, background: colorBgContainer }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                         <Space wrap>
                             <Tooltip title="Deletes selected users">
 
@@ -297,22 +302,23 @@ const Panel: React.FC = () => {
 
                         </Space>
 
-                        <span style={{ marginLeft: 8 }}>
+                        <span style={{ marginLeft: 8, alignSelf: 'center' }}>
                             {selectedRowKeys.length > 0 ? `Selected ${selectedRowKeys.length} users` : ''}
                         </span>
                     </div>
-                    <Space>
+                    <Space wrap>
                         <Tooltip title="Delete users who haven't verified email">
                             <Popconfirm title="Are you sure?" onConfirm={handleDeleteUnverified}>
-                                <Button style={{ marginBottom: '16px' }} icon={<ClearOutlined />}>Delete Unverified</Button>
+                                <Button icon={<ClearOutlined />}>Delete Unverified</Button>
                             </Popconfirm>
                         </Tooltip>
                         <Tooltip title="Refresh">
-                            <Button style={{ marginBottom: '16px' }} type="primary" icon={<ReloadOutlined />} onClick={fetchData} loading={loading} />
+                            <Button type="primary" icon={<ReloadOutlined />} onClick={fetchData} loading={loading} />
                         </Tooltip>
                     </Space>
-                </Space>
+                </div>
                 <Table
+                    scroll={{ x: 'max-content' }}
                     rowSelection={rowSelection}
                     columns={columns}
                     rowKey={(record) => record.id}
